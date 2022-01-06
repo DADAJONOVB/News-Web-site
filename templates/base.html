@@ -33,7 +33,6 @@
 </div>
 <div class="sidebar-menu">
     <ul class="menu">
-        <li class="sidebar-title">Yangliklar</li>
         
         <li class="sidebar-item  ">
             <a href="index.html" class="sidebar-link">
@@ -54,12 +53,11 @@
                 <span>Categoiyalar</span>
             </a>
             <ul class="submenu ">
+                {% for cat in category %}
                 <li class="submenu-item ">
-                    <a href="table-datatable.html">Datatable</a>
+                    <a href="table-datatable.html">{{cat}}</a>
                 </li>
-                <li class="submenu-item ">
-                    <a href="table-datatable-jquery.html">Datatable (jQuery)</a>
-                </li>
+                {% endfor %}
             </ul>
         </li>
         <li class="sidebar-item  ">
@@ -68,16 +66,10 @@
                 <span>Joylash</span>
             </a>
         </li>
-        
-       
-        
-        <li class="sidebar-title">Account</li>
- 
-        
         <li class="sidebar-item  has-sub">
             <a href="#" class="sidebar-link">
                 <i class="bi bi-person-badge-fill"></i>
-                <span>Batafsil</span>
+                <span>Account</span>
             </a>
             <ul class="submenu ">
                 <li class="submenu-item ">
