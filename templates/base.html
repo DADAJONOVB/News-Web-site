@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        
+        <link rel="stylesheet" href="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.css' %}">
+        <link rel="stylesheet" href="{% static 'vendors/bootstrap-icons/bootstrap-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'css/app.css' %}">
+        <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon">
+        {% block css %}
+
+        {% endblock css %}
+    </head>
+<body>
+    <div id="sidebar" class="active">
+        <div class="sidebar-wrapper active ps ps--active-y">
+<div class="sidebar-header">
+    <div class="d-flex justify-content-between">
+        <div class="logo">
+            <a href="index.html"><img src="{% static 'images/logo/unnamed.png' %}" alt="Logo" srcset=""></a>
+        </div>
+        <div class="toggler">
+            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+        </div>
+    </div>
+</div>
+<div class="sidebar-menu">
+    <ul class="menu">
+        <li class="sidebar-title">Yangliklar</li>
+        
+        <li class="sidebar-item  ">
+            <a href="index.html" class="sidebar-link">
+                <i class="bi bi-grid-fill"></i>
+                <span>Yangi</span>
+            </a>
+        </li>
+        <li class="sidebar-item  ">
+            <a href="table.html" class="sidebar-link">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Barcha</span>
+            </a>
+        </li>
+        
+        <li class="sidebar-item  has-sub">
+            <a href="#" class="sidebar-link">
+                <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                <span>Categoiyalar</span>
+            </a>
+            <ul class="submenu ">
+                <li class="submenu-item ">
+                    <a href="table-datatable.html">Datatable</a>
+                </li>
+                <li class="submenu-item ">
+                    <a href="table-datatable-jquery.html">Datatable (jQuery)</a>
+                </li>
+            </ul>
+        </li>
+        <li class="sidebar-item  ">
+            <a href="table.html" class="sidebar-link">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Joylash</span>
+            </a>
+        </li>
+        
+       
+        
+        <li class="sidebar-title">Account</li>
+ 
+        
+        <li class="sidebar-item  has-sub">
+            <a href="#" class="sidebar-link">
+                <i class="bi bi-person-badge-fill"></i>
+                <span>Batafsil</span>
+            </a>
+            <ul class="submenu ">
+                <li class="submenu-item ">
+                    <a href="auth-login.html">Kirish</a>
+                </li>
+                <li class="submenu-item ">
+                    <a href="auth-register.html">Ro`yxatdan o`tish</a>
+                </li>
+                <!-- <li class="submenu-item ">
+                    <a href="auth-forgot-password.html">Forgot Password</a>
+                </li> -->
+            </ul>
+        </li>
+    </ul>
+</div>
+<button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+<div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 969px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 417px;"></div></div></div>
+    </div>
+    {% block content %}
+
+    {% endblock content %}
+
+    <script src="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>    
+    <script src="{% static 'js/mazer.js' %}"></script>
+    {% block js %}
+
+    {% endblock js %}
+</body>
+</html>
