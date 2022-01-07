@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import index, songi_yanglik, yanglik_qoshish
+from .views import index, songi_yanglik, detail
 
 urlpatterns = [
-    path('', index),
-    path('songi', songi_yanglik),
-    path('add', yanglik_qoshish)
+    path('', index, name='index_url'),
+    path('songi', songi_yanglik, name='songi_url'),
+    path('detail/<int:pk>/', detail)
 ]

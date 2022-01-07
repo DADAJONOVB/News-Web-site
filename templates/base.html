@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="{% static 'vendors/bootstrap-icons/bootstrap-icons.css' %}">
         <link rel="stylesheet" href="{% static 'css/app.css' %}">
         <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon">
+        <link rel="stylesheet" href="{% static 'vendors/choices.js/choices.min.css' %}" /> 
         {% block css %}
 
         {% endblock css %}
@@ -35,13 +36,13 @@
     <ul class="menu">
         
         <li class="sidebar-item  ">
-            <a href="index.html" class="sidebar-link">
+            <a href="{% url 'songi_url' %}" class="sidebar-link">
                 <i class="bi bi-grid-fill"></i>
                 <span>Yangi</span>
             </a>
         </li>
         <li class="sidebar-item  ">
-            <a href="table.html" class="sidebar-link">
+            <a href="{% url 'index_url' %}" class="sidebar-link">
                 <i class="bi bi-grid-1x2-fill"></i>
                 <span>Barcha</span>
             </a>
@@ -60,12 +61,12 @@
                 {% endfor %}
             </ul>
         </li>
-        <li class="sidebar-item  ">
-            <a href="table.html" class="sidebar-link">
+        <li class="sidebar-item ">
+            <a class="sidebar-link" data-bs-toggle="modal"  data-bs-target="#inlineForm">
                 <i class="bi bi-grid-1x2-fill"></i>
-                <span>Joylash</span>
+                <span data-bs-toggle="modal"  data-bs-target="#inlineForm" >Joylash</span>
             </a>
-        </li>
+       </li>       
         <li class="sidebar-item  has-sub">
             <a href="#" class="sidebar-link">
                 <i class="bi bi-person-badge-fill"></i>
@@ -73,14 +74,14 @@
             </a>
             <ul class="submenu ">
                 <li class="submenu-item ">
-                    <a href="auth-login.html">Kirish</a>
+                    <a href="{% url 'login_url' %}">Kirish</a>
                 </li>
                 <li class="submenu-item ">
-                    <a href="auth-register.html">Ro`yxatdan o`tish</a>
+                    <a href="{% url 'register_url' %}">Ro`yxatdan o`tish</a>
                 </li>
-                <!-- <li class="submenu-item ">
-                    <a href="auth-forgot-password.html">Forgot Password</a>
-                </li> -->
+                <li class="submenu-item ">
+                    <a href="{% url 'logout_url' %}">Chiqish</a>
+                </li>
             </ul>
         </li>
     </ul>
@@ -92,11 +93,13 @@
 
     {% endblock content %}
 
-    <script src="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>    
-    <script src="{% static 'js/mazer.js' %}"></script>
     {% block js %}
 
     {% endblock js %}
+    <script src="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>    
+    <script src="{% static 'js/mazer.js' %}"></script>
+    <script src="{% static 'vendors/choices.js/choices.min.js' %}"></script>
+    <script src="{% static 'js/pages/form-element-select.js' %}"></script>
 </body>
 </html>

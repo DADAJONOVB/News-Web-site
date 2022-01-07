@@ -27,29 +27,84 @@
             </div>
         </div>
     </div>
-    <!-- Basic card section start -->
-    <section id="content-types">
+     <!-- Basic card section start -->
+     <section id="content-types">
         <div class="row">
+            {% for n in news %}
             <div class="col-xl-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <h4 class="card-title">Card With Header And Footer</h4>
+                            <h4 class="card-title">{{n.title}}</h4>
                             <p class="card-text">
-                                Gummies bonbon apple pie fruitcake icing biscuit apple pie jelly-o sweet roll. Toffee
-                                sugar plum sugar plum jelly-o jujubes bonbon dessert carrot cake.
+                                {{n.body| truncatewords:17}}
                             </p>
                         </div>
-                        <img class="img-fluid w-100" src="{% static 'images/samples/banana.jpg' %}" alt="Card image cap">
+                        <img class="img-fluid w-100" src="{{ n.image.all.first.photo.url }}" alt="Card image" id="img_index">
                     </div>
                     <div class="card-footer d-flex justify-content-end">
-                        <button class="btn btn-light-primary">Read More</button>
+                        <a class="btn btn-light-primary" href="#"> Batafsil</a>
                     </div>
                 </div>
             </div>
-
+            {% endfor %}
         </div>
     </section>
     <!-- Basic Card types section end -->
 
     {% endblock content %}
+    
+    {% block js %}
+ <!--login form Modal -->
+ <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog"
+ aria-labelledby="myModalLabel33" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+     role="document">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h4 class="modal-title" id="myModalLabel33">Yanglik qo`shish </h4>
+             <button type="button" class="close" data-bs-dismiss="modal"
+                 aria-label="Close">
+                 <i data-feather="x"></i>
+             </button>
+         </div>
+         <form action="#">
+             <div class="modal-body">
+                 <label>Sarlavha </label>
+                 <div class="form-group">
+                     <input type="text" placeholder="yanglik sarlavhasi"
+                         class="form-control">
+                 </div>
+                 <label>Kategoriya</label>
+                     <div class="form-group">
+                         <select class="choices form-select" multiple="multiple">
+                             {% for c in category %}
+                             <option value="square">{{c}}</option>
+                             {% endfor %}
+                         </select>
+                     </div>
+                 <label>Rasm</label>
+                 <input class="form-control" type="file" id="formFile">
+                 <br>
+                 <div class="form-group with-title mb-3">
+                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                     <label>Tana qismi</label>
+                 </div>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-light-secondary"
+                     data-bs-dismiss="modal">
+                     <i class="bx bx-x d-block d-sm-none"></i>
+                     <span class="d-none d-sm-block">Yopish</span>
+                 </button>
+                 <button type="button" class="btn btn-primary ml-1"
+                     data-bs-dismiss="modal">
+                     <i class="bx bx-check d-block d-sm-none"></i>
+                     <span class="d-none d-sm-block">Saqlash</span>
+                 </button>
+             </div>
+         </form>
+     </div>
+ </div>
+</div>
+    {% endblock js %}

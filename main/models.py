@@ -2,9 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Image(models.Model):
-    photo = models.ImageField(upload_to='images')
-
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
@@ -13,9 +10,9 @@ class Category(models.Model):
 
 class News(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL,  null=True)
+    category = models.ManyToManyField(Category)
     title = models.CharField(max_length=255)
-    image = models.ManyToManyField(Image)
+    photo = models.ImageField(upload_to='images')
     body = models.TextField()
     is_active = models.BooleanField(default=True)
 

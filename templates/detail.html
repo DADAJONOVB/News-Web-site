@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div id="app">
+    <div id="main">
+   
+<div class="page-heading">
+<div class="page-title"> <br>
+<div class="row">
+  <div class="col-12 col-md-4 order-md-1 order-last">
+    <h3>{{new.title}}</h3>
+  </div>
+  <div class="col-12 col-md-4 order-md-1 order-last">
+      <h3>Muallif: {{new.user}}</h3>
+    </div>
+    <div class="col-12 col-md-4 order-md-1 order-last">
+    {% for c in new.category.all %}
+      <button type="button" class="btn btn-lg btn btn-primary" style="margin-right: 10px;margin-bottom: 10px;">{{c.name}}</button> 
+    {% endfor %}
+    </div>
+</div> <br>
+</div>
+<section class="section">
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="{{new.photo.url}}" class="d-block w-100" alt="...">
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <h5>{{new.body}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- <div class="col-md-6">
+<div class="card-header">
+<h4>Slides only</h4>
+<p>A carousel without slide control</p>
+</div>
+<div class="card-body">
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'images/samples/building.jpg' %}" class="d-block w-100" alt="...">
+    </div>
+  </div>
+</div>
+</div>
+</div> -->
+
+{% endblock content %}   
+{% block js %}
+<!--login form Modal -->
+<div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog"
+aria-labelledby="myModalLabel33" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+ role="document">
+ <div class="modal-content">
+     <div class="modal-header">
+         <h4 class="modal-title" id="myModalLabel33">Yanglik qo`shish </h4>
+         <button type="button" class="close" data-bs-dismiss="modal"
+             aria-label="Close">
+             <i data-feather="x"></i>
+         </button>
+     </div>
+     <form action="#">
+         <div class="modal-body">
+             <label>Sarlavha </label>
+             <div class="form-group">
+                 <input type="text" placeholder="yanglik sarlavhasi"
+                     class="form-control">
+             </div>
+             <label>Kategoriya</label>
+                 <div class="form-group">
+                     <select class="choices form-select" multiple="multiple">
+                         {% for c in category %}
+                         <option value="square">{{c}}</option>
+                         {% endfor %}
+                     </select>
+                 </div>
+             <label>Rasm</label>
+             <input class="form-control" type="file" id="formFile">
+             <br>
+             <div class="form-group with-title mb-3">
+                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                 <label>Tana qismi</label>
+             </div>
+         </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-light-secondary"
+                 data-bs-dismiss="modal">
+                 <i class="bx bx-x d-block d-sm-none"></i>
+                 <span class="d-none d-sm-block">Yopish</span>
+             </button>
+             <button type="button" class="btn btn-primary ml-1"
+                 data-bs-dismiss="modal">
+                 <i class="bx bx-check d-block d-sm-none"></i>
+                 <span class="d-none d-sm-block">Saqlash</span>
+             </button>
+         </div>
+     </form>
+ </div>
+</div>
+</div>
+</div>
+</div>
+{% endblock js %}
+
