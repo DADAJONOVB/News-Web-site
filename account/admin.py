@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import region, Staff
 
-# Register your models here.
+
+admin.site.register(region)
+admin.site.register(Staff)

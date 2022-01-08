@@ -24,3 +24,7 @@ def user_login(request):
 
 def user_register(request):
     return render(request, 'account/register.html')
+
+def dashboard(request):
+    if request.user.is_staff == True:
+        return render(request, 'account/admin-dashboard.html')

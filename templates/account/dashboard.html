@@ -1,47 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div id="app">
-    <div id="main">
-   
-<div class="page-heading">
-<div class="page-title"> <br>
-<div class="row">
-  <div class="col-12 col-md-4 order-md-1 order-last">
-    <h3>{{new.title}}</h3>
-  </div>
-  <div class="col-12 col-md-4 order-md-1 order-last">
-      <h3>Muallif: {{new.user}}</h3>
-    </div>
-    <div class="col-12 col-md-4 order-md-1 order-last">
-    {% for c in new.category.all %}
-      <button type="button" class="btn btn-lg btn btn-primary" style="margin-right: 10px;margin-bottom: 10px;">{{c.name}}</button> 
-    {% endfor %}
-    </div>
-</div> <br>
-</div>
-<section class="section">
-<div class="row">
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6 col-12">
-                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                          <div class="carousel-item active">
-                            <img src="{{new.photo.url}}" class="d-block w-100" alt="...">
-                          </div>
-                        </div>
-                      </div>
-                </div>
-                <div class="col-md-6 col-12">
-                    <h5>{{new.body}}</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
+
+<h1>USER</h1>
+
 
 {% endblock content %}   
 {% block js %}

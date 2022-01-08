@@ -1,5 +1,6 @@
+from datetime import timezone
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -9,11 +10,12 @@ class Category(models.Model):
         return self.name
 
 class News(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    category = models.ManyToManyField(Category)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    category = models.ManyToManyField(Category, blank=True)
     title = models.CharField(max_length=255)
     photo = models.ImageField(upload_to='images')
     body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
