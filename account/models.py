@@ -8,8 +8,6 @@ class Staff(AbstractUser):
     active = models.BooleanField(default=False)
 
 
-
-
 class region(models.Model):
     name = models.CharField(max_length=255)
 

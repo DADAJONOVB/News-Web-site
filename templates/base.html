@@ -61,12 +61,14 @@
                 {% endfor %}
             </ul>
         </li>
+        {% if user.active == True %}
         <li class="sidebar-item ">
             <a class="sidebar-link" data-bs-toggle="modal"  data-bs-target="#inlineForm">
                 <i class="bi bi-grid-1x2-fill"></i>
                 <span data-bs-toggle="modal"  data-bs-target="#inlineForm" >Joylash</span>
             </a>
-       </li>       
+       </li>     
+       {% endif %}  
         <li class="sidebar-item  has-sub">
             <a href="#" class="sidebar-link">
                 <i class="bi bi-person-badge-fill"></i>
