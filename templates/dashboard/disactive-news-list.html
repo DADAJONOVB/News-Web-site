@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<style>
+#pagination-nav{
+    margin: 1%;
+}
+#button{
+    width: 50px;
+}
+
+</style>
+{% endblock css %}
+{% block content %}
+<div id="main">
+    <header class="mb-3">
+        <a href="#" class="burger-btn d-block d-xl-none">
+            <i class="bi bi-justify fs-3"></i>
+        </a>
+    </header>
+            
+<section class="section">
+    <div class="row" id="table-head">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Nofaol yangliklar royxati</h4>
+                </div>
+                <div class="card-content">
+                    <!-- table head dark -->
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>№</th>
+                                    <th>NOMI</th>
+                                    <th>MUXBIR</th>
+                                    <th>VILOYAT</th>
+                                    <th>VAQTI</th>
+                                    <th>O`ZGARTIRISH</th>
+                                    <th>O`CHIRISH</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for new in news %}
+                                <tr class="tr">
+                                    <td class="text-bold-500">{{forloop.counter}}</td>
+                                    <td>{{new.title}}</td>
+                                    <td>{{new.user.username}}</td>
+                                    <td class="text-bold-500">{{new.user.region.name}}</td>
+                                    <td>{{new.created}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-success px-2" data-bs-toggle="modal" data-bs-target="#exampleSmallModal2" id="button"><i class="bi bi-arrow-up-right"></i></button>               
+                                        <!-- modal change -->
+                                        <div class="modal fade2" id="exampleSmallModal2" tabindex="-1" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; text-align: center;">
+                                                            Yanglikni xolatini o`zgartirish</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form method="post" action="{% url 'change_news_url' new.id %}" style="margin:20px;">
+                                                        <input type="hidden" name="csrfmiddlewaretoken" value="NMJDtoS2e1eCk9FJlLzVQvZxwMN095fdOPkWuddavO8wSquXZdniEAZRUDDUO55N">
+                                                        {% csrf_token %}
+                                                        <div class="col-8" style="padding-bottom: 20px;display: flex;align-items:center">
+                                                            <div class="form-check" style="font-size: 18px;">
+                                                                <label class="form-check-label" for="gridCheck">Faolligi</label>
+                                                                <input class="form-check-input" type="checkbox" id="gridCheck" name="active">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
+                                                            <button type="submit" class="btn btn-primary">Saqlash</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- modal change end -->
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger px-2" data-bs-toggle="modal" data-bs-target="#exampleSmallModal"  id="button"><i class="bi bi-trash"></i></button>
+                                        <!-- modal delete -->
+                                            <form action="{% url 'delete_news_url' %}" method="get">
+                                                <div class="modal fade" id="exampleSmallModal" tabindex="-1" style="display: none;" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; text-align: center;">
+                                                                    Yanglikni o`chirmoqchimisiz?</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-footer" style="justify-content: center;">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Qaytish</button>
+                                                                <button type="submit" class="btn btn-danger" name="new_id" value="{{new.id}}">O`chirish</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!-- modal delete end -->
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- pagination start -->
+                    {% if news.paginator.num_pages > 1 %}
+                        <nav aria-label="Page navigation example" id="pagination-nav">
+                            <ul class="pagination pagination-primary">
+                                {% if news.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page={{news.previous_page_number }}">
+                                        <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
+                                    </a></li>
+                                {% endif %}
+                                {% for num in news.paginator.page_range %}
+                                {% if num == news.number %}
+                                <li class="page-item active"><a class="page-link" href="#">{{num}}</a></li>
+                                {% elif num > news.number|add:'-3' and num < news.number|add:'3' %}
+                                <li class="page-item "><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                                {% endif %}
+                                {% endfor %}
+                                {% if news.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ news.next_page_number }}"><span aria-hidden="true"><i class="bi bi-chevron-right"></i></span></a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                    <!-- end pagination -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}   
+{% block js %}
+
+
+<!--login form Modal -->
+<div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog"
+aria-labelledby="myModalLabel33" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+ role="document">
+ <div class="modal-content">
+     <div class="modal-header">
+         <h4 class="modal-title" id="myModalLabel33">Yanglik qo`shish </h4>
+         <button type="button" class="close" data-bs-dismiss="modal"
+             aria-label="Close">
+             <i data-feather="x"></i>
+         </button>
+     </div>
+     <form  enctype="multipart/form-data" action="{% url 'create_news_url' %}" method="post">
+        {% csrf_token %}
+         <div class="modal-body">
+             <label>Sarlavha </label>
+             <div class="form-group">
+                 <input type="text" placeholder="yanglik sarlavhasi" class="form-control" name="title" >
+             </div>
+             <label>Kategoriya</label>
+                 <div class="form-group">
+                     <select class="choices form-select" multiple="multiple" name="category">
+                         {% for c in category %}
+                         <option value="{{c.id}}">{{c}}</option>
+                         {% endfor %}
+                     </select>
+                 </div>
+             <label>Rasm</label>
+             <input class="form-control" type="file" id="formFile" name="photo" >
+             <br>
+             <div class="form-group with-title mb-3">
+                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="body" ></textarea>
+                 <label>Tana qismi</label>
+             </div>
+         </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-light-secondary"
+                 data-bs-dismiss="modal">
+                 <i class="bx bx-x d-block d-sm-none"></i>
+                 <span class="d-none d-sm-block">Yopish</span>
+             </button>
+             <button type="submit" class="btn btn-primary ml-1">
+                 <i class="bx bx-check d-block d-sm-none"></i>
+                 <span class="d-none d-sm-block">Saqlash</span>
+             </button>
+         </div>
+     </form>
+ </div>
+</div>
+</div>
+</div>
+</div>
+{% endblock js %}
