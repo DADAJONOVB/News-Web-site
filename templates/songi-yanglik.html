@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
+
+{% block css %}
+<style>
+    #img_index{
+        object-fit: cover; 
+        width: 120%; 
+        height:  
+        280px; 
+        object-position: 50% 50%;
+    }
+</style>
+{% endblock css %}
+
+{% load static %} 
 {% block content %}
-{% load static %}
             
 <div class="page-heading">
     <div class="page-title">

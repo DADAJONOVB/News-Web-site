@@ -152,3 +152,9 @@ def change_user_status(request, pk):
         user.active = False
     user.save()
     return redirect('dashboard_url')
+
+def add_category(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        Category(Category.object.create(name=name))
+        return redirect(dashboard_url)

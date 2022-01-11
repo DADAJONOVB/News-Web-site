@@ -50,9 +50,6 @@ def create_news(request):
         new = News.objects.create(title=title, photo=photo, body=body, user=request.user)
 
         for cat in category:
-            try:
-                ct = Category.objects.get(id=cat)
-                new.category.add(ct)
-                print(True)
-            except:
-                pass
+            ct = Category.objects.get(id=cat)
+            new.category.add(ct)
+            print(True)
