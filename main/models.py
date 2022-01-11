@@ -10,7 +10,7 @@ class Category(models.Model):
         return self.name
 
 class News(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='new')
     category = models.ManyToManyField(Category, blank=True)
     title = models.CharField(max_length=255)
     photo = models.ImageField(upload_to='images')

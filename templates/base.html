@@ -24,8 +24,13 @@
         <div class="sidebar-wrapper active ps ps--active-y">
 <div class="sidebar-header">
     <div class="d-flex justify-content-between">
-        <div class="logo">
+        <div class="logo" style="display: flex;">
             <a href="index.html"><img src="{% static 'images/logo/unnamed.png' %}" alt="Logo" srcset=""></a>
+            {% if user.is_authenticated %}
+            <div class="sidebar-item" style="margin-left: 10px;">
+                <span>{{user.username}}</span>
+            </div>
+            {% endif %}
         </div>
         <div class="toggler">
             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -91,6 +96,13 @@
 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
 <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 969px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 417px;"></div></div></div>
     </div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+        
     {% block content %}
 
     {% endblock content %}

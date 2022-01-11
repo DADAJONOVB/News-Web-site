@@ -12,13 +12,6 @@
 </style>
 {% endblock css %}
 {% block content %}
-<div id="main">
-    <header class="mb-3">
-        <a href="#" class="burger-btn d-block d-xl-none">
-            <i class="bi bi-justify fs-3"></i>
-        </a>
-    </header>
-            
 <section class="section">
     <div class="row" id="table-head">
         <div class="col-12">
@@ -48,7 +41,7 @@
                                     <td>{{new.title}}</td>
                                     <td>{{new.user.username}}</td>
                                     <td class="text-bold-500">{{new.user.region.name}}</td>
-                                    <td>{{new.created}}</td>
+                                    <td>{{new.created|date:'Y-m-d H:i'}}</td>
                                     <td>
                                         <button type="button" class="btn btn-success px-2" data-bs-toggle="modal" data-bs-target="#exampleSmallModal2" id="button"><i class="bi bi-arrow-up-right"></i></button>               
                                         <!-- modal change -->

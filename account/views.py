@@ -25,13 +25,14 @@ def PagenatorPage(List, num, request):
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
+        print(form)
         if form.is_valid():
             cd = form.cleaned_data
             user = authenticate(username=cd['username'], password=cd['password'])
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponse('Authenticated successfully')
+                    return redirect('dashboard_url')
                 else:
                     return HttpResponse('Disabled account')
             else:
@@ -49,27 +50,78 @@ def dashboard(request):
         disactive_user = Staff.objects.filter(active=False).count()
         active_news = News.objects.filter(is_active=True).count()
         disactive_news = News.objects.filter(is_active=False).count()
-    context ={
-        'active_user':active_user,
-        'disactive_user':disactive_user,
-        'active_news':active_news,
-        'disactive_news':disactive_news
-    }
-    return render(request, 'dashboard/admin-dashboard.html', context)
-
+        users = Staff.objects.filter(active=True)[:3]
+        regions = region.objects.all()
+        category = Category.objects.all()
+        number = []
+        object = []
+        for n in region.objects.all():
+            number.append(n.staff.count())
+            object.append(n.name)
+        context ={
+            'active_user':active_user,
+            'disactive_user':disactive_user,
+            'active_news':active_news,
+            'disactive_news':disactive_news,
+            'users':users,
+            'regions':regions,
+            'number': number,
+            'object': object,
+            'category':category 
+        }
+        return render(request, 'dashboard/admin-dashboard.html', context)
+    elif request.user.is_staff == False:
+        user = request.user
+        news = News.objects.filter(user=user)
+        colegiya = Staff.objects.filter(region=request.user.region)[:3]
+        category = Category.objects.all()
+        context = {
+            'user':user,
+            'colegiya':colegiya,
+            'news':PagenatorPage(news, 5, request),
+            'category':category 
+        }
+        return render(request, 'dashboard/dashboard.html', context)
+            
 
 
 def active_users_list(request):
-    return render(request, 'dashboard/active-users-list.html', {'user':PagenatorPage(Staff.objects.filter(active=True), 10, request)})
+    user = Staff.objects.filter(active=True)
+    category = Category.objects.all()
+    context = {
+        'user' : PagenatorPage(user, 10, request),
+        'category': category
+    }
+    
+
+    return render(request, 'dashboard/active-users-list.html', context)
 
 def disactive_users_list(request):
-    return render(request, 'dashboard/disactive-users-list.html', {'user':PagenatorPage(Staff.objects.filter(active=False), 10, request)})
+    category = Category.objects.all()
+    user = Staff.objects.filter(active=False)
+    context = {
+        'user':PagenatorPage(user, 10, request),
+        'category': category
+    }
+    return render(request, 'dashboard/disactive-users-list.html', context)
 
 def active_news(request):
-    return render(request, 'dashboard/active-news-list.html', {'news':PagenatorPage(News.objects.filter(is_active=True), 10, request)})
+    category = Category.objects.all()
+    news = News.objects.filter(is_active=True)
+    context = {
+        'news':news,
+        'category':category
+    }
+    return render(request, 'dashboard/active-news-list.html', context)
 
 def disactive_news(request):
-    return render(request, 'dashboard/disactive-news-list.html', {'news':PagenatorPage(News.objects.filter(is_active=False), 10, request)})
+    category = Category.objects.all()
+    news = News.objects.filter(is_active=False)
+    context = {
+        'news':news,
+        'category':category
+    }
+    return render(request, 'dashboard/disactive-news-list.html', context)
 
 
 def delete_news(request):
@@ -82,11 +134,21 @@ def delete_news(request):
         return HttpResponse(False)
 
 def change_news(request, pk):
-    new = News.objects.get(id=pk)
+    new = get_object_or_404(News, id=pk)
     active = request.POST.get('active')
     if active == 'on':
         new.is_active = True
     else:
         new.is_active = False
     new.save()
+    return redirect('dashboard_url')
+
+def change_user_status(request, pk):
+    user = get_object_or_404(Staff, id=pk)
+    active = request.POST.get('active')
+    if active == 'on':
+        user.active =True
+    else:
+        user.active = False
+    user.save()
     return redirect('dashboard_url')

@@ -2,16 +2,22 @@
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'vendors/iconly/bold.css'% }">
-
+<style>
+    #newstyle{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+    #newstyle i{
+        margin-top: -12px;
+        margin-left: -8px;
+    }
+</style>
 {% endblock css %}
 {% block content %}
 
-<div id="main">
-    <header class="mb-3">
-        <a href="#" class="burger-btn d-block d-xl-none">
-            <i class="bi bi-justify fs-3"></i>
-        </a>
-    </header>
+
     
 <div class="page-heading">
 <h3>Profile Statistics</h3>
@@ -21,28 +27,32 @@
 <div class="col-12 col-lg-9">
     <div class="row">
         <div class="col-6 col-lg-3 col-md-6">
+            <a href="{% url 'active_users_list_url' %}">
             <div class="card">
                 <div class="card-body px-3 py-4-5">
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="stats-icon purple">
+                            <div class="stats-icon purple" id='newstyle'>
                                 <i class="bi bi-person-check-fill"></i>
                             </div>
+                            
                         </div>
-                        <div class="col-md-8">
-                            <h6 class="text-muted font-semibold">Faol xodimlar</h6>
-                            <h6 class="font-extrabold mb-0">{{active_user}}</h6>
+                            <div class="col-md-8">
+                                <h6 class="text-muted font-semibold">Faol xodimlar</h6>
+                                <h6 class="font-extrabold mb-0">{{active_user}}</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-6 col-lg-5 col-md-6">
+            <a href="{% url 'disactive_users_list_url' %}">
             <div class="card">
                 <div class="card-body px-3 py-4-5">
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="stats-icon blue">
+                            <div class="stats-icon blue" id='newstyle'>
                                 <i class="bi bi-person-dash"></i>
                             </div>
                         </div>
@@ -53,13 +63,15 @@
                     </div>
                 </div>
             </div>
+            </a>
         </div>
         <div class="col-6 col-lg-4 col-md-6">
+            <a href="{% url 'active_news_url' %}">
             <div class="card">
                 <div class="card-body px-3 py-4-5">
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="stats-icon green">
+                            <div class="stats-icon green" id='newstyle'> 
                                 <i class="bi bi-file-earmark-check"></i>
                             </div>
                         </div>
@@ -70,23 +82,9 @@
                     </div>
                 </div>
             </div>
+            </a>
         </div>
         <div class="col-6 col-lg-3 col-md-6">
-            <!-- <div class="card">
-                <div class="card-body px-3 py-4-5">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="stats-icon red">
-                                <i class="bi bi-file-earmark-excel"></i>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <h6 class="text-muted font-semibold">Nofal yangiliklar</h6>
-                            <h6 class="font-extrabold mb-0">{{disactive_news}}</h6>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
     <div class="row">
@@ -103,11 +101,12 @@
     </div>
 </div>
 <div class="col-12 col-lg-3">
+    <a href="{% url 'disactive_users_list_url' %}">
     <div class="card">
         <div class="card-body px-3 py-4-5">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="stats-icon red">
+                    <div class="stats-icon red" id='newstyle'>
                         <i class="bi bi-file-earmark-excel"></i>
                     </div>
                 </div>
@@ -118,54 +117,25 @@
             </div>
         </div>
     </div>
-    <!-- <div class="card">
-        <div class="card-body py-4 px-5">
-            <div class="d-flex align-items-center">
-                <div class="avatar avatar-xl">
-                    <img src="{% static 'images/3135715.png' %}" alt="Face 1">
-                </div>
-                <div class="ms-3 name">
-                    <h5 class="font-bold">{{user.username}}</h5>
-                    <h6 class="text-muted mb-0">{{user.email}}</h6>
-                </div>
-            </div>
-        </div>
-    </div> -->
+    </a>
     <div class="card">
         <div class="card-header">
-            <h4>Recent Messages</h4>
+            <h4>Yangi xodimlar</h4>
         </div>
         <div class="card-content pb-4">
+            {% for user in users %}
             <div class="recent-message d-flex px-4 py-3">
                 <div class="avatar avatar-lg">
                     <img src="{% static 'images/2.png' %}">
                 </div>
                 <div class="name ms-4">
-                    <h5 class="mb-1">Hank Schrader</h5>
-                    <h6 class="text-muted mb-0">@johnducky</h6>
+                    <h5 class="mb-1">{{user.username}}</h5>
+                    <h6 class="text-muted mb-0">@{{user.email}}</h6>
                 </div>
             </div>
-            <div class="recent-message d-flex px-4 py-3">
-                <div class="avatar avatar-lg">
-                    <img src="assets/images/faces/5.jpg">
-                </div>
-                <div class="name ms-4">
-                    <h5 class="mb-1">Dean Winchester</h5>
-                    <h6 class="text-muted mb-0">@imdean</h6>
-                </div>
-            </div>
-            <div class="recent-message d-flex px-4 py-3">
-                <div class="avatar avatar-lg">
-                    <img src="assets/images/faces/1.jpg">
-                </div>
-                <div class="name ms-4">
-                    <h5 class="mb-1">John Dodol</h5>
-                    <h6 class="text-muted mb-0">@dodoljohn</h6>
-                </div>
-            </div>
+            {% endfor %}
             <div class="px-4">
-                <button class='btn btn-block btn-xl btn-light-primary font-bold mt-3'>Start
-                    Conversation</button>
+                <a class='btn btn-block btn-xl btn-light-primary font-bold mt-3' href="{% url 'active_users_list_url' %}">Batafsil</a>
             </div>
         </div>
     </div>
@@ -175,6 +145,11 @@
 </div>
 </div>
 
+{% for region in regions.satff %}
+<h1 style="text-align: center;"> 
+    {{region}}
+</h1>
+{% endfor %}
 {% endblock content %}   
 {% block js %}
 <!--login form Modal -->
@@ -231,6 +206,50 @@ aria-labelledby="myModalLabel33" aria-hidden="true">
 </div>
 </div>
 <script src="{% static 'vendors/apexcharts/apexcharts.js' %}"></script>
-<script src="{% static 'js/pages/dashboard.js' %}"></script>
+<script>
+    var category = []
+    var data = []
+</script>
+
+{% for r in regions%}
+<script>
+category.push('{{r}}') 
+</script>
+{% endfor  %} 
+{% for n in number%}
+<script>
+data.push(parseInt('{{n}}'))
+</script>
+{% endfor  %} 
+<script>
+    console.log("=1=1=1=1==1",data)
+    var optionsProfileVisit = {
+	annotations: {
+		position: 'back'
+	},
+	dataLabels: {
+		enabled:false
+	},
+	chart: {
+		type: 'bar',
+		height: 300
+	},
+	fill: {
+		opacity:1
+	},
+	plotOptions: {
+	},
+	series: [{
+		name: 'sales',
+		data: data
+	}],
+	colors: '#435ebe',
+	xaxis: {
+		categories: category,
+	},
+}
+var chartProfileVisit = new ApexCharts(document.querySelector("#chart-profile-visit"), optionsProfileVisit);
+chartProfileVisit.render();
+</script>
 
 {% endblock js %}
