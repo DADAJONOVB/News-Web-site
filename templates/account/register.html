@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ro`yxatdan o`tish</title>
+    <link rel="stylesheet" href="{% static 'vendors/choices.js/choices.min.css' %}" /> 
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'vendors/bootstrap-icons/bootstrap-icons.css' %}">
@@ -27,35 +30,56 @@
                 <a href="index.html"><img src="{% static 'images/logo/Daryo.png' %}" alt="Logo"></a>
             </div>
             <h1 class="auth-title">Ro`yxatdan o`tish</h1>
-            <p class="auth-subtitle mb-5">Ma`lumotlar joylash uchun ro`yxatdan o`ting.</p>
             <p class="auth-subtitle mb-5">Bizning veb-saytimizga ro'yxatdan o'tish uchun ma'lumotlaringizni kiriting.</p>
-
-            <form action="index.html">
+            <form method="post">
+                {% csrf_token %}
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" placeholder="Email">
-                    <div class="form-control-icon">
-                        <i class="bi bi-envelope"></i>
-                    </div>
-                </div>
-                <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" placeholder="Username">
+                    <input type="text" class="form-control form-control-xl" placeholder="Username" name="username" >
                     <div class="form-control-icon">
                         <i class="bi bi-person"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-xl" placeholder="Parol">
+                    <input type="text" class="form-control form-control-xl" placeholder="Ism" name="first_name" >
+                    <div class="form-control-icon">
+                        <i class="bi bi-person-check"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left mb-4">
+                    <input type="text" class="form-control form-control-xl" placeholder="Familiya" name="last_name" >
+                    <div class="form-control-icon">
+                        <i class="bi bi-person-check"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left mb-4">
+                    <input type="text" class="form-control form-control-xl" placeholder="Telefon raqam" name="phone" >
+                    <div class="form-control-icon">
+                        <i class="bi bi-telephone"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left mb-4">
+                    <input type="password" class="form-control form-control-xl" placeholder="Parol" name="password1" >
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-xl" placeholder="Parol takrorlash">
+                    <input type="password" class="form-control form-control-xl" placeholder="Parol takrorlash" name="password2" >
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>
                 </div>
-                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Ro`yxatdan o`tish</button>
+                <div class="form-group position-relative has-icon-left mb-4">
+                    <h6>Viloyatingiz</h6>
+                    <fieldset class="form-group">
+                        <select class="form-select" id="basicSelect" style="height: 58.4766px;" name="regions" >
+                                {% for r in region %}
+                                <option value="{{r.id}}">{{r}}</option>
+                                {% endfor %}
+                        </select>
+                    </fieldset>
+                </div>
+                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" type="submit" >Ro`yxatdan o`tish</button>
             </form>
             <div class="text-center mt-5 text-lg fs-4">
                 <p class='text-gray-600'>Accauntiz bormi? <a href="auth-login.html" class="font-bold">Kirish</a>.</p>
@@ -64,12 +88,18 @@
     </div>
     <div class="col-lg-7 d-none d-lg-block">
         <div id="auth-right">
-
         </div>
     </div>
 </div>
-
     </div>
+    <script src="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    
+<!-- Include Choices JavaScript -->
+<script src="{% static 'vendors/choices.js/choices.min.js' %}"></script>
+<script src="{% static 'js/pages/form-element-select.js' %}"></script>
+
+    <script src="{% static 'js/mazer.js' %}"></script>
 </body>
 
 </html>

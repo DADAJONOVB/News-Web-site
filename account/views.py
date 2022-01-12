@@ -1,8 +1,9 @@
+from django import forms
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm
+from .forms import LoginForm, CustomUserCreationForm
 from.models import Staff, region
 from main.models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -42,7 +43,49 @@ def user_login(request):
     return render(request, 'account/login.html', {'form': form})
 
 def user_register(request):
-    return render(request, 'account/register.html')
+    if request.method =="POST":
+        # try:
+        #     form = CustomUserCreationForm(request.POST)
+        #     print(form)
+        #     if form.is_valid():
+        #         print(True)
+        #         form.save()
+        #     else:
+        #         print(False)
+        # except:
+        #     return HttpResponse(False)
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone = request.POST.get('phone')
+        password = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        
+        regions = request.POST.get('regions')
+        select_region = region.objects.get(id=regions)
+        print(username)
+        print(first_name)
+        print(last_name)
+        print(phone)
+        print(password)
+        print(password2)
+        print(regions)
+        Staff.objects.create_user(
+            username=username, 
+            first_name=first_name, 
+            last_name=last_name, 
+            raqam=phone, 
+            password=password, 
+            region=select_region
+            )
+    else:
+        pass
+        # form = CustomUserCreationForm
+    context = {
+        'region': region.objects.all()
+        # 'form': form
+    }
+    return render(request, 'account/register.html', context)
 
 def dashboard(request):
     if request.user.is_staff == True:
@@ -127,6 +170,7 @@ def disactive_news(request):
 def delete_news(request):
     try:
         new = request.GET.get('new_id')
+        print(new)
         delete_order = News.objects.get(id=new)
         delete_order.delete()
         return redirect('dashboard_url')
@@ -157,4 +201,8 @@ def add_category(request):
     if request.method == 'POST':
         name = request.POST['name']
         Category(Category.object.create(name=name))
-        return redirect(dashboard_url)
+        return redirect('dashboard_url')
+
+def DeleteNew(request, pk):
+    News.objects.get(id=pk).delete()
+    return redirect('dashboard_url')

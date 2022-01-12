@@ -49,7 +49,8 @@
                         </div>
                         <img class="img-fluid w-100" src="{{n.photo.url}}" alt="Card image" id="img_index">
                     </div>
-                    <div class="card-footer d-flex justify-content-end">
+                    <div class="card-footer d-flex justify-content-between">
+                        <button class="btn btn-light-secondary" href="{% url 'detail_url' n.id %}"> {{n.created|date:'Y-m-d H:i'}}</button>
                         <a class="btn btn-light-primary" href="{% url 'detail_url' n.id %}"> Batafsil</a>
                     </div>
                 </div>

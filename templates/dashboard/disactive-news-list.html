@@ -42,7 +42,7 @@
                                     <td>{{new.title}}</td>
                                     <td>{{new.user.username}}</td>
                                     <td class="text-bold-500">{{new.user.region.name}}</td>
-                                    <td>{{new.created:|date:'Y-m-d H:i'}}}</td>
+                                    <td>{{new.created|date:'Y-m-d H:i'}}}</td>
                                     <td>
                                         <button type="button" class="btn btn-success px-2" data-bs-toggle="modal" data-bs-target="#exampleSmallModal2" id="button"><i class="bi bi-arrow-up-right"></i></button>               
                                         <!-- modal change -->
@@ -74,32 +74,34 @@
                                         <!-- modal change end -->
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger px-2" data-bs-toggle="modal" data-bs-target="#exampleSmallModal"  id="button"><i class="bi bi-trash"></i></button>
-                                        <!-- modal delete -->
-                                            <form action="{% url 'delete_news_url' %}" method="get">
-                                                <div class="modal fade" id="exampleSmallModal" tabindex="-1" style="display: none;" aria-hidden="true">
-                                                    <div class="modal-dialog modal-sm">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; text-align: center;">
-                                                                    Yanglikni o`chirmoqchimisiz?</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-footer" style="justify-content: center;">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Qaytish</button>
-                                                                <button type="submit" class="btn btn-danger" name="new_id" value="{{new.id}}">O`chirish</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <!-- modal delete end -->
+                                        <button type="button" class="btn btn-danger px-2" data-bs-toggle="modal" data-bs-target="#exampleSmallModal{{new.id}}"  id="button"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
+
+                    {% for new in news %}
+                    <form action="{% url 'delete_news_url' %}" method="get">
+                        <div class="modal fade" id="exampleSmallModal{{new.id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; text-align: center;">
+                                            Yanglikni o`chirmoqchimisiz?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-footer" style="justify-content: center;">
+                                        <p>{{new.id}}</p>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Qaytish</button>
+                                        <button type="submit" class="btn btn-danger" name="new_id" value="{{new.id}}">O`chirish</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    {% endfor %}
                     <!-- pagination start -->
                     {% if news.paginator.num_pages > 1 %}
                         <nav aria-label="Page navigation example" id="pagination-nav">

@@ -9,7 +9,8 @@ from .views import (
     active_news,
     active_users_list,
     disactive_users_list,
-    change_user_status
+    change_user_status,
+    DeleteNew
     )
 
 urlpatterns = [
@@ -26,5 +27,6 @@ urlpatterns = [
     # change delete
     path('delete-news/', delete_news, name='delete_news_url'),
     path('change-news/<int:pk>/', change_news, name='change_news_url'),
+    path('delete-new/<int:pk>/', DeleteNew, name='delete-new'),
     path('change-user-status/<int:pk>/', change_user_status, name='change_user_status_url')
 ]
