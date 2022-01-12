@@ -3,7 +3,13 @@ from .models import Category, News
 
 def index(request):
     category = Category.objects.all()
-    news = News.objects.filter(is_active=True)[:5]
+    news = News.objects.filter(is_active=True)
+    search = request.GET.get('q')
+    category = request.GET.get('category')
+    if search is not None:
+        news = News.objects.filter(title__icontains=search)
+    elif category is not None:
+        news =  News.objects.filter(category__name=category)
     context = {
         'category': category,
         'news': news

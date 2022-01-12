@@ -59,11 +59,13 @@
                 <span>Categoiyalar</span>
             </a>
             <ul class="submenu ">
+                <form action="{% url 'index_url' %}" method="get">
                 {% for cat in category %}
                 <li class="submenu-item ">
                     <a href="table-datatable.html">{{cat}}</a>
                 </li>
                 {% endfor %}
+                </form>
             </ul>
         </li>
         {% if user.active == True %}
