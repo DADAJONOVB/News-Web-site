@@ -1,20 +1,37 @@
+from http.client import HTTPResponse
 from django.shortcuts import get_object_or_404, render
 from .models import Category, News
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+
+def PagenatorPage(List, num, request):
+    paginator = Paginator(List, num)
+    pages = request.GET.get('page')
+
+    try:
+        list = paginator.page(pages)
+    except PageNotAnInteger:
+        list = paginator.page(1)
+    except EmptyPage:
+        list = paginator.page(paginator.num_pages)
+    return list
+
 
 def index(request):
     category = Category.objects.all()
     news = News.objects.filter(is_active=True)
     search = request.GET.get('q')
-    category = request.GET.get('category')
+    category_name = request.GET.get('category')
     if search is not None:
         news = News.objects.filter(title__icontains=search)
     elif category is not None:
-        news =  News.objects.filter(category__name=category)
+        news =  News.objects.filter(category__name=category_name)
     context = {
         'category': category,
-        'news': news
+        'news': PagenatorPage(news, 5, request),
     }
     return render(request, 'index.html', context)
+
 
 
 def songi_yanglik(request):
@@ -27,35 +44,27 @@ def songi_yanglik(request):
     return render(request, 'songi-yanglik.html', context)
 
 
-def base(request):
-    category = Category.objects.all()
-    return render(request, 'base.html', {'category':category})
-
 def detail(request, pk):
-    if request.method == 'POST':
-        print(True)
-    else:
-        category = Category.objects.all()
-        new = get_object_or_404(News, id=pk)
-        context = {
-            'category': category,
-            'new': new
-        }
+    category = Category.objects.all()
+    new = get_object_or_404(News, id=pk)
+    context = {
+        'category': category,
+        'new': new
+    }
     return render(request, 'detail.html', context)
 
 def create_news(request):
-    if request.method == 'POST':
-        print('post keldi')
-        title = request.POST['title']
-        print(title)
-        photo = request.FILES.get('photo')
-        body = request.POST['body']
-        category = request.POST['category']
-        print(category)
+    if request.user.active == True:
+        if request.method == 'POST':
+            title = request.POST['title']
+            photo = request.FILES.get('photo')
+            body = request.POST['body']
+            category = request.POST['category']
 
-        new = News.objects.create(title=title, photo=photo, body=body, user=request.user)
+            new = News.objects.create(title=title, photo=photo, body=body, user=request.user)
 
-        for cat in category:
-            ct = Category.objects.get(id=cat)
-            new.category.add(ct)
-            print(True)
+            for cat in category:
+                ct = Category.objects.get(id=cat)
+                new.category.add(ct)
+    else:
+        return HTTPResponse(False)

@@ -49,9 +49,9 @@
                                     <td>{{u.region}}</td>  
                                     {% endif %}
                                     <td>
-                                        <button type="button" class="btn btn-success px-2" data-bs-toggle="modal" data-bs-target="#exampleSmallModal2" id="button"><i class="bi bi-arrow-up-right"></i></button>               
+                                        <button type="button" class="btn btn-success px-2" data-bs-toggle="modal" data-bs-target="#exampleSmallModal{{u.id}}" id="button"><i class="bi bi-arrow-up-right"></i></button>               
                                         <!-- modal change -->
-                                        <div class="modal fade2" id="exampleSmallModal2" tabindex="-1" aria-hidden="true" style="display: none;">
+                                        <div class="modal fade2" id="exampleSmallModal{{u.id}}" tabindex="-1" aria-hidden="true" style="display: none;">
                                             <div class="modal-dialog modal-sm">
                                                 <div class="modal-content">
                                                     <div class="modal-header">

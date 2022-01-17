@@ -42,11 +42,11 @@
                                     <td>{{new.title}}</td>
                                     <td>{{new.user.username}}</td>
                                     <td class="text-bold-500">{{new.user.region.name}}</td>
-                                    <td>{{new.created|date:'Y-m-d H:i'}}}</td>
+                                    <td>{{new.created|date:'Y-m-d H:i'}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-success px-2" data-bs-toggle="modal" data-bs-target="#exampleSmallModal2" id="button"><i class="bi bi-arrow-up-right"></i></button>               
+                                        <button type="button" class="btn btn-success px-2" data-bs-toggle="modal" data-bs-target="#exampleSmallModal{{new.id}}" id="button"><i class="bi bi-arrow-up-right"></i></button>               
                                         <!-- modal change -->
-                                        <div class="modal fade2" id="exampleSmallModal2" tabindex="-1" aria-hidden="true" style="display: none;">
+                                        <div class="modal fade2" id="exampleSmallModal{{new.id}}" tabindex="-1" aria-hidden="true" style="display: none;">
                                             <div class="modal-dialog modal-sm">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -93,7 +93,6 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-footer" style="justify-content: center;">
-                                        <p>{{new.id}}</p>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Qaytish</button>
                                         <button type="submit" class="btn btn-danger" name="new_id" value="{{new.id}}">O`chirish</button>
                                     </div>
