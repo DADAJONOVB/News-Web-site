@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, CustomUserCreationForm
 from.models import Staff, region
 from main.models import *
@@ -41,6 +41,10 @@ def user_login(request):
         form = LoginForm()
         
     return render(request, 'account/login.html', {'form': form})
+
+def user_logout(request):
+    logout(request)
+    return redirect("index_url")
 
 def user_register(request):
     if request.method =="POST":

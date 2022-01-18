@@ -19,13 +19,14 @@ def PagenatorPage(List, num, request):
 
 def index(request):
     category = Category.objects.all()
-    news = News.objects.filter(is_active=True)
     search = request.GET.get('q')
     category_name = request.GET.get('category')
-    if search is not None:
-        news = News.objects.filter(title__icontains=search)
-    elif category is not None:
-        news =  News.objects.filter(category__name=category_name)
+    if search != '' and search is not None:
+        news = News.objects.filter(title__icontains=search).filter(is_active=True)
+    elif category != '' and category is not None:
+        news = News.objects.filter(category__name=category_name).filter(is_active=True)
+    else:
+        news = News.objects.filter(is_active=True)
     context = {
         'category': category,
         'news': PagenatorPage(news, 5, request),
