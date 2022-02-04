@@ -55,4 +55,4 @@ def create_news(request):
         for cat in category:
             ct = Category.objects.get(id=cat)
             new.category.add(ct)
-            return redirect('dashboard_url')
+        return redirect('dashboard_url')
