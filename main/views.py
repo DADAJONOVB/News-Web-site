@@ -45,17 +45,14 @@ def detail(request, pk):
 
 def create_news(request):
     if request.method == 'POST':
-        print('post keldi')
         title = request.POST['title']
-        print(title)
         photo = request.FILES.get('photo')
         body = request.POST['body']
         category = request.POST['category']
-        print(category)
 
         new = News.objects.create(title=title, photo=photo, body=body, user=request.user)
 
         for cat in category:
             ct = Category.objects.get(id=cat)
             new.category.add(ct)
-            print(True)
+            return redirect('dashboard_url')
