@@ -23,7 +23,7 @@ def index(request):
     category_name = request.GET.get('category')
     if search != '' and search is not None:
         news = News.objects.filter(title__icontains=search).filter(is_active=True)
-    elif category != '' and category is not None:
+    elif category_name != '' and category_name is not None:
         news = News.objects.filter(category__name=category_name).filter(is_active=True)
     else:
         news = News.objects.filter(is_active=True)
@@ -53,3 +53,17 @@ def detail(request, pk):
         'new': new
     }
     return render(request, 'detail.html', context)
+
+def create_news(request):
+    if request.user.active == True:
+        if request.method == 'POST':
+            title = request.POST['title']
+            photo = request.FILES.get('photo')
+            body = request.POST['body']
+            category = request.POST['category']
+            new = News.objects.create(title=title, photo=photo, body=body, user=request.user)
+            for cat in category:
+                ct = Category.objects.get(id=cat)
+                new.category.add(ct)
+    else:
+        return HTTPResponse(False)

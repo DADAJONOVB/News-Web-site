@@ -58,14 +58,10 @@
                 <i class="bi bi-file-earmark-spreadsheet-fill"></i>
                 <span>Categoiyalar</span>
             </a>
-            <ul class="submenu ">
+            <ul class="submenu">
                 {% for cat in category %}
-                <li class="submenu-item ">
-<<<<<<< HEAD
-                    <a href="?category={{cat.name}}{% url 'index_url' %}">{{cat}}</a>
-=======
+                <li class="submenu-item">
                     <a href="{% url 'index_url' %}?category={{cat}}">{{cat}}</a>
->>>>>>> f70403582a1cd5bf17422e550a34e6812fae424e
                 </li>
                 {% endfor %}
             </ul>
