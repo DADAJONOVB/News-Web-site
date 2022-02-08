@@ -1,8 +1,8 @@
-from django import forms
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, CustomUserCreationForm
 from.models import Staff, region
 from main.models import *
@@ -25,65 +25,56 @@ def PagenatorPage(List, num, request):
 
 def user_login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        print(form)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(username=cd['username'], password=cd['password'])
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('dashboard_url')
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                user = authenticate(username=cd['username'], password=cd['password'])
+                if user is not None:
+                    if user.is_active:
+                        login(request, user)
+                        return redirect('dashboard_url')
+                    else:
+                        messages.error(request, 'Xatolik ro`y berdi')
                 else:
-                    return HttpResponse('Disabled account')
-            else:
-                return HttpResponse('Invalid login')
+                    messages.error(request, 'Xatolik ro`y berdi')
     else:
         form = LoginForm()
+        
     return render(request, 'account/login.html', {'form': form})
+
+def user_logout(request):
+    logout(request)
+    return redirect("index_url")
 
 def user_register(request):
     if request.method =="POST":
-        # try:
-        #     form = CustomUserCreationForm(request.POST)
-        #     print(form)
-        #     if form.is_valid():
-        #         print(True)
-        #         form.save()
-        #     else:
-        #         print(False)
-        # except:
-        #     return HttpResponse(False)
         username = request.POST.get('username')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         phone = request.POST.get('phone')
         password = request.POST.get('password1')
         password2 = request.POST.get('password2')
-        
         regions = request.POST.get('regions')
-        select_region = region.objects.get(id=regions)
-        print(username)
-        print(first_name)
-        print(last_name)
-        print(phone)
-        print(password)
-        print(password2)
-        print(regions)
-        Staff.objects.create_user(
-            username=username, 
-            first_name=first_name, 
-            last_name=last_name, 
-            raqam=phone, 
-            password=password, 
-            region=select_region
-            )
+        try:
+            password == password2
+            select_region = region.objects.get(id=regions)
+            Staff.objects.create_user(
+                username=username, 
+                first_name=first_name, 
+                last_name=last_name, 
+                raqam=phone, 
+                password=password, 
+                region=select_region
+                )
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('dashboard_url')
+        except:
+            messages.error(request, 'Xatolik ro`y berdi')
     else:
         pass
-        # form = CustomUserCreationForm
     context = {
         'region': region.objects.all()
-        # 'form': form
     }
     return render(request, 'account/register.html', context)
 
@@ -152,7 +143,7 @@ def active_news(request):
     category = Category.objects.all()
     news = News.objects.filter(is_active=True)
     context = {
-        'news':news,
+        'news':PagenatorPage(news, 10, request),
         'category':category
     }
     return render(request, 'dashboard/active-news-list.html', context)
@@ -161,7 +152,7 @@ def disactive_news(request):
     category = Category.objects.all()
     news = News.objects.filter(is_active=False)
     context = {
-        'news':news,
+        'news':PagenatorPage(news, 10, request),
         'category':category
     }
     return render(request, 'dashboard/disactive-news-list.html', context)
@@ -170,7 +161,6 @@ def disactive_news(request):
 def delete_news(request):
     try:
         new = request.GET.get('new_id')
-        print(new)
         delete_order = News.objects.get(id=new)
         delete_order.delete()
         return redirect('dashboard_url')
@@ -198,11 +188,12 @@ def change_user_status(request, pk):
     return redirect('dashboard_url')
 
 def add_category(request):
-    if request.method == 'POST':
-        name = request.POST['name']
-        Category(Category.object.create(name=name))
-        return redirect('dashboard_url')
-
-def DeleteNew(request, pk):
-    News.objects.get(id=pk).delete()
-    return redirect('dashboard_url')
+    if request.user.is_staff == True:
+        if request.method == 'POST':
+            name = request.POST['name']
+            Category.objects.create(name=name)
+            return redirect('dashboard_url')
+        else:
+            return HttpResponse(False)
+    else:
+        return HttpResponse(False)

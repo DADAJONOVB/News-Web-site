@@ -10,13 +10,14 @@ from .views import (
     active_users_list,
     disactive_users_list,
     change_user_status,
-    DeleteNew
+    add_category,
+    user_logout
     )
 
 urlpatterns = [
     path('log-in/', user_login, name='login_url'),
     path('register/', user_register, name='register_url'),
-    path('log-out/', user_register, name='logout_url'),
+    path('log-out/', user_logout, name='logout_url'),
     #dashboard
     path('dashboard/', dashboard, name='dashboard_url'),
     # tables
@@ -27,6 +28,6 @@ urlpatterns = [
     # change delete
     path('delete-news/', delete_news, name='delete_news_url'),
     path('change-news/<int:pk>/', change_news, name='change_news_url'),
-    path('delete-new/<int:pk>/', DeleteNew, name='delete-new'),
-    path('change-user-status/<int:pk>/', change_user_status, name='change_user_status_url')
+    path('change-user-status/<int:pk>/', change_user_status, name='change_user_status_url'),
+    path('add-category/', add_category, name='add_category_url')
 ]
