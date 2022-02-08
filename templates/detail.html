@@ -26,7 +26,11 @@
                     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                           <div class="carousel-item active">
-                            <img src="{{new.photo.url}}" class="d-block w-100" alt="...">
+                            {% if new.photo %}
+                                <img src="{{new.photo.url}}" class="d-block w-100" alt="...">
+                            {% else %}
+                                <img src="{% static 'images/default/1.jpg' %}" alt="foto" class="d-block w-100" >
+                            {% endif %}
                           </div>
                         </div>
                       </div>

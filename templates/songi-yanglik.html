@@ -44,7 +44,11 @@
                         <div class="card-body">
                             <h4 class="card-title">{{n.title}}</h4>
                         </div>
+                        {% if n.photo %}
                         <img class="img-fluid w-100" src="{{n.photo.url}}" alt="Card image" id="img_index">
+                        {% else %}
+                        <img class="img-fluid w-100" src="{% static 'images/default/2.jpg' %}" alt="news image" id="img_index">
+                        {% endif %}
                     </div>
                     <div class="card-footer d-flex justify-content-between">
                         <button class="btn btn-light-secondary" href="{% url 'detail_url' n.id %}"> {{n.created|date:'Y-m-d H:i'}}</button>

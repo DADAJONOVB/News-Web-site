@@ -1,5 +1,5 @@
 from http.client import HTTPResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Category, News
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -65,5 +65,8 @@ def create_news(request):
             for cat in category:
                 ct = Category.objects.get(id=cat)
                 new.category.add(ct)
+            return redirect('detail_url', new.id)
+        else:
+            return HTTPResponse('Ruxsat berilmagan')
     else:
         return HTTPResponse(False)
